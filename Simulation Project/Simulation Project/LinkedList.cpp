@@ -1,5 +1,6 @@
 #include "LinkedList.h"
 #include <iostream>
+
 using namespace std;
 
 LinkedList::LinkedList() {
@@ -14,9 +15,22 @@ void LinkedList::addElement(listType newCustomer) {
 	if (listIsEmpty()) {
 		headPtr = tempPtr;
 	}
+
+	//organizes data based on qtimes
+	else if (tempPtr->data.enterQTime < headPtr->data.enterQTime) {
+		tempPtr->nextPtr = headPtr;
+		headPtr = tempPtr;
+	}
 	else {
 		Node* holdPtr = headPtr;
-		while (holdPtr != nullptr && holdPtr->nextPtr != nullptr) {
+
+		//makes sure to organize based on qtimes
+		while (holdPtr != nullptr 
+				&& holdPtr->nextPtr != nullptr
+				&& holdPtr->nextPtr->data.enterQTime < tempPtr->data.enterQTime) {
+			holdPtr = holdPtr->nextPtr;
+		}
+		if (holdPtr != nullptr) {
 			tempPtr->nextPtr = holdPtr->nextPtr;
 			holdPtr->nextPtr = tempPtr;
 		}
@@ -30,7 +44,9 @@ void LinkedList::delElement() {
 		headPtr = headPtr->nextPtr;
 		delete tempPtr;
 		tempPtr = nullptr;
-		listCount--;
+
+		//this is where static list count decrements
+		--listCount;
 	}
 }
 
@@ -39,9 +55,7 @@ listType LinkedList::peek() {
 	if (!listIsEmpty()) {
 		tempData = headPtr->data;
 	}
-	else {
-		return;
-	}
+
 	return tempData;
 }
 

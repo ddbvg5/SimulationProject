@@ -1,9 +1,7 @@
-using namespace std;
-
 struct listType {
-	int cartId;
-	int itemCount;
-	int enterQTime;
+	int cartId;		//unique id assigned for each cart
+	int itemCount;  //amount of items the customer will get (randomly generated)
+	int enterQTime; //current ‘time’ + shopping time
 };
 
 struct Node {
@@ -14,12 +12,12 @@ struct Node {
 class LinkedList {
 public:
 	LinkedList();
-	void addElement(listType);
-	listType peek();
-	void delElement();
+	void addElement(listType);	//add cart information to the list (list should probably be ordered)
+	listType peek();			//return the contents of the front of the list (but do not remove)
+	void delElement();			//remove a node item from the front of the list
 	void printList();
-	bool listIsEmpty();
-	static int listCount;
+	bool listIsEmpty();			//return true if the list is empty (headPtr = nullptr?), false otherwise
+	static int listCount;		//number of carts currently in the list
 private:
 	Node* headPtr;
 };

@@ -49,6 +49,34 @@ queueNodeData Queue::peek() {
 	return tempData;
 }
 
+int Queue::accrue(int checkingOut) {
+	queueNode* tempNode = front;
+	if (!queueEmpty()) {
+		while (tempNode != nullptr) {
+			//ensures incoming customer timer is greater than anyone else's in queue
+			while (tempNode->data.timeAvailable > checkingOut) {
+				checkingOut++;
+			}
+			tempNode = tempNode->nextPtr;
+		}
+	}
+
+	return checkingOut;
+}
+
+int Queue::queueLength() {
+	queueNode* tempNode = front;
+	
+	//variable used to measure length
+	int counter = 0;
+
+	while (tempNode != nullptr) {
+		counter++;
+		tempNode = tempNode->nextPtr;
+	}
+	return counter;
+}
+
 bool Queue::queueEmpty() {
 	return front == nullptr;
 }
